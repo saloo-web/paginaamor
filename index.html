@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta Animada para Mi Amor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Estrellas en el fondo */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+            opacity: 0.8;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Tarjeta */
+        .card {
+            width: 300px;
+            height: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Borde brillante animado */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #ffc3a0, #ffe4e1, #ff6b6b);
+            z-index: -1;
+            animation: borderGlow 6s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .card .heart {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 100px;
+            background: red;
+            clip-path: polygon(50% 0, 100% 35%, 75% 100%, 50% 70%, 25% 100%, 0 35%);
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translate(-50%, 0);
+            }
+            50% {
+                transform: translate(-50%, -20px);
+            }
+        }
+
+        .card h1 {
+            margin: 20px 0 10px;
+            color: #ff6b6b;
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 16px;
+            text-align: center;
+            margin: 0 15px;
+        }
+
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            width: 400px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .modal img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal h2 {
+            font-size: 24px;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        /* Animación para las chispas */
+        .sparkles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo de estrellas -->
+    <script>
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.animationDuration = `${Math.random() * 3 + 1}s`;
+            document.body.appendChild(star);
+        }
+    </script>
+
+    <!-- Tarjeta -->
+    <div class="card">
+        <div class="heart"></div>
+        <h1>Para Mi Amor</h1>
+        <p>
+            Eres mi razón de sonreír,  
+            mi confidente,  
+            y mi todo.  
+            Te amo más de lo que las palabras pueden decir.
+        </p>
+        <button class="button" onclick="showModal()">¡Te Amo!</button>
+        <div class="sparkles"></div>
+    </div>
+
+    <!-- Modal con foto -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <img src="imagen.jpg" alt="Foto Especial">
+            <h2>Mi Amor</h2>
+            <p>Este es solo un pequeño recordatorio de lo mucho que te quiero. Gracias por estar siempre a mi lado.</p>
+            <button class="close-btn" onclick="closeModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Script para los efectos y el modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        // Función para mostrar el modal
+        function showModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'flex';
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        }
+
+        // Animación de chispas
+        setInterval(function() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = `${Math.random() * 100}vw`;
+            sparkle.style.top = `${Math.random() * 100}vh`;
+            sparkle.style.animationDuration = `${Math.random() * 2 + 1}s`;
+            document.querySelector('.sparkles').appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }, 100);
+    </script>
+</body>
+</html>
